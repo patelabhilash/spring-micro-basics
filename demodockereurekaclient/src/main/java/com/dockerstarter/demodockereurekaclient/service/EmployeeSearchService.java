@@ -1,12 +1,13 @@
 package com.dockerstarter.demodockereurekaclient.service;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import com.dockerstarter.demodockereurekaclient.domain.model.Employee;
+
 import org.springframework.stereotype.Service;
-import com.dockerstarter.demodockereurekaclient.model.Employee;
 @Service
 public class EmployeeSearchService {
  private static Map < Long, Employee > EmployeeRepsitory = null;

@@ -1,13 +1,16 @@
 package com.dockerstarter.demodockereurekaclient.controller;
 
 import java.util.Collection;
+
+import com.dockerstarter.demodockereurekaclient.domain.model.Employee;
+import com.dockerstarter.demodockereurekaclient.service.EmployeeSearchService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.example.EmployeeSearchService.domain.model.Employee;
-import com.example.EmployeeSearchService.service.EmployeeSearchService;
+
 @RefreshScope
 @RestController
 public class EmployeeSearchController {
