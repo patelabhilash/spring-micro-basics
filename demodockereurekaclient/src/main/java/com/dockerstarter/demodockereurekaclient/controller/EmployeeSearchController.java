@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RefreshScope
-@RestController
+@RestController("/emps")
 public class EmployeeSearchController {
  @Autowired
  EmployeeSearchService employeeSearchService;
