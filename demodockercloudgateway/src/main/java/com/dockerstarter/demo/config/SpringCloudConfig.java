@@ -15,9 +15,9 @@ public class SpringCloudConfig {
                         .uri("lb://CLIENT-CONFIG")
                         .id("employeeModule"))
 
-               /* .route(r -> r.path("/dashboard/**")
-                        .uri("lb://EmployeeDashBoard")
-                        .id("dashboardModule"))*/
+                .route(r -> r.path("/dashboard/**")
+                        .uri("lb://EMPLOYEEDASHBOARD")
+                        .id("dashboardModule"))
                 .build();
     }
 }

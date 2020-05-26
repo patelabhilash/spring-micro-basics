@@ -18,10 +18,12 @@ public class EmployeeSearchController {
  EmployeeSearchService employeeSearchService;
  @RequestMapping("/employee/find/{id}")
  public Employee findById(@PathVariable Long id) {
+	 System.out.println("demodockereurekaclient EmployeeSearchController.findById()");
   return employeeSearchService.findById(id);
  }
  @RequestMapping("/employee/findall")
  public Collection < Employee > findAll() {
+	 System.out.println("demodockereurekaclient EmployeeSearchController.findAll()");
   return employeeSearchService.findAll();
  }
 }

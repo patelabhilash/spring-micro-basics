@@ -11,14 +11,18 @@ import com.dockerstarter.demodockerdashboard.model.EmployeeInfo;
 @RefreshScope
 @RestController
 public class FeignEmployeeInfoController {
+	
  @Autowired
  EmployeeServiceProxy proxyService;
- @RequestMapping("/dashboard/feign/{myself}")
+ 
+ @RequestMapping("/dashboard/clientservice/{myself}")
  public EmployeeInfo findme(@PathVariable Long myself) {
+	 System.out.println("demodockerdashboard FeignEmployeeInfoController.findme()");
   return proxyService.findById(myself);
  }
- @RequestMapping("/dashboard/feign/peers")
+ @RequestMapping("/dashboard/clientservice/peers")
  public Collection < EmployeeInfo > findPeers() {
+	 System.out.println("demodockerdashboard FeignEmployeeInfoController.findPeers()");
   return proxyService.findAll();
  }
 }
