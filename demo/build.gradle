@@ -1,6 +1,7 @@
 plugins {
 	id 'org.springframework.boot' version '2.3.0.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'com.google.cloud.tools.jib' version '2.3.0'
 	id 'java'
 }
 
@@ -22,3 +23,27 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
+
+jib {
+	from {
+		image = 'openjdk:8-jdk-alpine'
+	}
+	//to {
+	//	image = 'patelabhilash/jib-minimal-example'
+	//	auth {
+    //  username = 'patelabhilash'
+    //  password = 'd110e357-1aed-43db-87e6-2d053bab79b4'
+    //	}
+	//}
+	
+	//, '-Xmy:flag=jib-rules'
+	container {
+		jvmFlags = ['-Xms512m', '-Xdebug']
+		mainClass = 'com.example.demo.DemoApplication'
+		volumes = ['/mainVolume']
+		ports =['80/udp', '80/tcp']
+	}
+	allowInsecureRegistries=true
+}
+
+tasks.build.dependsOn tasks.jibDockerBuild
