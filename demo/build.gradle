@@ -24,19 +24,21 @@ test {
 	useJUnitPlatform()
 }
 
+//'-Xmy:flag=jib-rules' is by default included 
 jib {
 	from {
 		image = 'openjdk:8-jdk-alpine'
 	}
-	//to {
-	//	image = 'patelabhilash/jib-minimal-example'
-	//	auth {
-    //  username = 'patelabhilash'
-    //  password = 'd110e357-1aed-43db-87e6-2d053bab79b4'
-    //	}
-	//}
+	/** use to upload to dockerhub registry
+	to {
+		image = 'patelabhilash/jib-minimal-example'
+		auth {
+      username = 'patelabhilash'
+      password = 'd110e357-1aed-43db-87e6-2d053bab79b4'
+    	}
+	}
+	*/
 	
-	//, '-Xmy:flag=jib-rules'
 	container {
 		jvmFlags = ['-Xms512m', '-Xdebug']
 		mainClass = 'com.example.demo.DemoApplication'

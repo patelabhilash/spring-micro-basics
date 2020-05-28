@@ -5,7 +5,7 @@ plugins {
 	id 'java'
 }
 
-group = 'demoEurekaSrvr'
+group = 'com.dockerstarter'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
@@ -44,3 +44,27 @@ compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-
 test {
 	useJUnitPlatform()
 }
+
+//'-Xmy:flag=jib-rules' is by default included 
+jib {
+	from {
+		image = 'openjdk:8-jdk-alpine'
+	}
+	// use to upload to dockerhub registry
+	to {
+		image = 'patelabhilash/jib-mini-sb-eurekaserver'
+		auth {
+      username = 'patelabhilash'
+      password = 'd110e357-1aed-43db-87e6-2d053bab79b4'
+    	}
+	}
+	// details of image
+	container {
+		jvmFlags = ['-Xms512m', '-Xdebug']
+		mainClass = 'com.dockerstarter.demodockereurekaserver.DemoApplication'
+		volumes = ['/mainVolume']
+		ports =['9091:9091']
+	}
+	allowInsecureRegistries=true
+}
+//tasks.build.dependsOn tasks.jib

@@ -1,6 +1,7 @@
 plugins {
 	id 'org.springframework.boot' version '2.3.1.BUILD-SNAPSHOT'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'com.google.cloud.tools.jib' version '2.3.0'
 	id 'java'
 }
 
@@ -37,3 +38,27 @@ dependencyManagement {
 test {
 	useJUnitPlatform()
 }
+
+//'-Xmy:flag=jib-rules' is by default included 
+jib {
+	from {
+		image = 'openjdk:8-jdk-alpine'
+	}
+	// use to upload to dockerhub registry
+	to {
+		image = 'patelabhilash/jib-mini-sb-dashboard'
+		auth {
+      username = 'patelabhilash'
+      password = 'd110e357-1aed-43db-87e6-2d053bab79b4'
+    	}
+	}
+	// details of image
+	container {
+		jvmFlags = ['-Xms512m', '-Xdebug']
+		mainClass = 'com.dockerstarter.demodockerdashboard.DemoApplication'
+		volumes = ['/mainVolume']
+		ports =['8081:8081']
+	}
+	allowInsecureRegistries=true
+}
+//tasks.build.dependsOn tasks.jib

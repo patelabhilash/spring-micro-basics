@@ -20,7 +20,7 @@ ext {
 }
 
 dependencies {
-implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-ribbon'
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
@@ -38,3 +38,27 @@ dependencyManagement {
 test {
 	useJUnitPlatform()
 }
+
+//'-Xmy:flag=jib-rules' is by default included 
+jib {
+	from {
+		image = 'openjdk:8-jdk-alpine'
+	}
+	// use to upload to dockerhub registry
+	to {
+		image = 'patelabhilash/jib-mini-sb-eurekaclient'
+		auth {
+      username = 'patelabhilash'
+      password = 'd110e357-1aed-43db-87e6-2d053bab79b4'
+    	}
+	}
+	// details of image
+	container {
+		jvmFlags = ['-Xms512m', '-Xdebug']
+		mainClass = 'com.dockerstarter.demodockereurekaclient.DemoApplication'
+		volumes = ['/mainVolume']
+		ports =['8080:8080']
+	}
+	allowInsecureRegistries=true
+}
+//tasks.build.dependsOn tasks.jib

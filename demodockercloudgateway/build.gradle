@@ -41,3 +41,27 @@ dependencyManagement {
 test {
 	useJUnitPlatform()
 }
+
+//'-Xmy:flag=jib-rules' is by default included 
+jib {
+	from {
+		image = 'openjdk:8-jdk-alpine'
+	}
+	// use to upload to dockerhub registry
+	to {
+		image = 'patelabhilash/jib-mini-sb-cloudgateway'
+		auth {
+      username = 'patelabhilash'
+      password = 'd110e357-1aed-43db-87e6-2d053bab79b4'
+    	}
+	}
+	// details of image
+	container {
+		jvmFlags = ['-Xms512m', '-Xdebug']
+		mainClass = 'com.dockerstarter.demo.DemodockercloudgatewayApplication'
+		volumes = ['/mainVolume']
+		ports =['8084:8084']
+	}
+	allowInsecureRegistries=true
+}
+//tasks.build.dependsOn tasks.jib
