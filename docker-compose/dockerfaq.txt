@@ -21,3 +21,8 @@ docker exec -it config-server ls -- list all coaintr fils and foldrs
 docker exec -w /mainVolume/config_server config-server ls--- list all files inside volume of container
 
 external=true means volume will be created outside manually not from compose file.
+
+docker cp .\config-repo\client-config.properties config-server:/mainVolume(containr dir)
+
+>STEPS:
+--------

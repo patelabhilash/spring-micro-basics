@@ -25,7 +25,7 @@ services:
         image: patelabhilash/jib-mini-sb-eurekaclient:latest
         environment:
             SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://config-server-service:9090"}}}}'
-        entrypoint: /opt/bin/eurekaclient-entrypoint.sh
+        entrypoint: eurekaclient-entrypoint.sh
         expose:
             - 8080
         ports:
@@ -33,19 +33,19 @@ services:
         networks:
             - emp-network
         links:
-            - config-server:config-server
-            - eureka-server:eureka-server
+            - config-server-service:config-server-service
+            - eureka-server-service:eureka-server-service
         depends_on:
-            - config-server
-            - eureka-server
+            - config-server-service
+            - eureka-server-service
         logging:
             driver: json-file
     dashboard-service:
         container_name: dashboard
         image: patelabhilash/jib-mini-sb-dashboard:latest
         environment:
-            SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://config-server:9090"}}}}'
-        entrypoint: /opt/bin/dashboard-entrypoint.sh
+            SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://config-server-service:9090"}}}}'
+        entrypoint: dashboard-entrypoint.sh
         expose:
             - 8081
         ports:
@@ -53,11 +53,11 @@ services:
         networks:
             - emp-network
         links:
-            - config-server:config-server
-            - eureka-server:eureka-server
+            - config-server-service:config-server-service
+            - eureka-server-service:eureka-server-service
         depends_on:
-            - config-server
-            - eureka-server
+            - config-server-service
+            - eureka-server-service
         logging:
             driver: json-file
     cloud-gateway-service:
@@ -70,9 +70,9 @@ services:
         networks:
             - emp-network
         links:
-            - eureka-server:eureka-server
+            - eureka-server-service:eureka-server-service
         depends_on:
-            - eureka-server
+            - eureka-server-service
         logging:
             driver: json-file
 networks:
