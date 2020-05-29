@@ -63,7 +63,7 @@ jib {
 		jvmFlags = ['-Xms512m', '-Xdebug']
 		mainClass = 'com.dockerstarter.demodockereurekaserver.DemoApplication'
 		volumes = ['/mainVolume']
-		ports =['9091:9091']
+		ports =['9091']
 	}
 	allowInsecureRegistries=true
 }
