@@ -57,7 +57,7 @@ jib {
 		jvmFlags = ['-Xms512m', '-Xdebug']
 		mainClass = 'com.dockerstarter.demodockerdashboard.DemoApplication'
 		volumes = ['/mainVolume']
-		ports =['8081:8081']
+		ports =['8081']
 	}
 	allowInsecureRegistries=true
 }

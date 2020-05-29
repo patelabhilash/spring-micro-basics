@@ -60,7 +60,7 @@ jib {
 		jvmFlags = ['-Xms512m', '-Xdebug']
 		mainClass = 'com.dockerstarter.demo.DemodockercloudgatewayApplication'
 		volumes = ['/mainVolume']
-		ports =['8084:8084']
+		ports =['8084']
 	}
 	allowInsecureRegistries=true
 }
