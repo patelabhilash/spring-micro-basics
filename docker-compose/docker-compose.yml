@@ -1,0 +1,83 @@
+version: '3'
+services:
+    config-server-service:
+        container_name: config-server
+        image: patelabhilash/jib-mini-sb-configserver
+        expose:
+            - 9090
+        ports:
+            - 9090:9090
+        networks:
+            - emp-network
+        volumes:
+            - config-repo:/mainVolume
+    eureka-server-service:
+        container_name: eureka-server
+        image: patelabhilash/jib-mini-sb-eurekaserver:latest
+        expose:
+            - 9091
+        ports:
+            - 9091:9091
+        networks:
+            - emp-network
+    eureka-client-service:
+        container_name: eurekaclient
+        image: patelabhilash/jib-mini-sb-eurekaclient:latest
+        environment:
+            SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://config-server-service:9090"}}}}'
+        entrypoint: eurekaclient-entrypoint.sh
+        expose:
+            - 8080
+        ports:
+            - 8080:8080
+        networks:
+            - emp-network
+        links:
+            - config-server-service:config-server-service
+            - eureka-server-service:eureka-server-service
+        depends_on:
+            - config-server-service
+            - eureka-server-service
+        logging:
+            driver: json-file
+    dashboard-service:
+        container_name: dashboard
+        image: patelabhilash/jib-mini-sb-dashboard:latest
+        environment:
+            SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://config-server-service:9090"}}}}'
+        entrypoint: dashboard-entrypoint.sh
+        expose:
+            - 8081
+        ports:
+            - 8081:8081
+        networks:
+            - emp-network
+        links:
+            - config-server-service:config-server-service
+            - eureka-server-service:eureka-server-service
+        depends_on:
+            - config-server-service
+            - eureka-server-service
+        logging:
+            driver: json-file
+    cloud-gateway-service:
+        container_name: cloud-gateway
+        image: patelabhilash/jib-mini-sb-cloudgateway:latest
+        expose:
+            - 8084
+        ports:
+            - 8084:8084
+        networks:
+            - emp-network
+        links:
+            - eureka-server-service:eureka-server-service
+        depends_on:
+            - eureka-server-service
+        logging:
+            driver: json-file
+networks:
+    emp-network:
+        driver: bridge
+volumes:
+    config-repo:
+        external: false

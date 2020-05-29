@@ -1,0 +1,28 @@
+Build an Image
+docker build --file=Dockerfile-baseImage.dockerfile --tag=alpine-jdk:base --rm=true .
+
+Pull from registry(DockerHub)
+docker-compose pull config-server --- to pull image from docker(no credentials required)
+
+*config-server is  servicename over here.
+
+Create volume
+docker volume create --name=config-repo
+
+Note: in compose file we can only map volumes.
+
+NOTE USE DOCKER TOOL BOX IP TO ACCESS FROM OUTSIDE.
+
+docker cp /hostdir containername :/cointainerdir --copy to cointanr
+
+docker exec -it config-server ls -- list all coaintr fils and foldrs
+
+
+docker exec -w /mainVolume/config_server config-server ls--- list all files inside volume of container
+
+external=true means volume will be created outside manually not from compose file.
+
+docker cp .\config-repo\client-config.properties config-server:/mainVolume(containr dir)
+
+>STEPS:
+--------
